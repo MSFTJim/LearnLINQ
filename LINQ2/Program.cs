@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 
 namespace Application
 {
@@ -8,6 +9,24 @@ namespace Application
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            bool StringExists = false;
+            List<string> s1 = new List<string>()
+                { "AKS",
+                  "ARO",
+                  "APIM"
+                  };
+            string s2 = "Help us decide AKS or ARO.";
+
+            //StringExists = s2.Contains
+            
+            StringExists = s1.Any(s => s.Contains(s2));
+
+             foreach (string OneAsk in s1)
+            {
+                StringExists = s2.Contains(OneAsk);
+                Console.WriteLine(OneAsk+", "+StringExists);
+            }
+
 
             List<Student> students = new List<Student>
                 {
@@ -28,11 +47,12 @@ namespace Application
                 from student in students
                 where student.Scores[0] > 90
                 select student;
-                
-            foreach (Student student in studentQuery)
-            {
-                Console.WriteLine("{0}, {1}", student.Last, student.First);
-            }
+
+        //   foreach (Student student in studentQuery)
+        //     {
+        //         Console.WriteLine("{0}, {1}", student.Last, student.First);
+        //     }
+
 
         }
 
