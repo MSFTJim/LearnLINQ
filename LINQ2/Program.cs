@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Application
 {
@@ -8,36 +9,38 @@ namespace Application
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            string OneAskClassification = "";
-            bool StringExists = false;
-            int CloudNativeCount = 0; // aks, aro, aca, container, cloud native, k8s, kubernetes
-            List<string> CN_SingleTerms = new List<string>()
-                { "AKS",
-                  "ARO",
-                  "ACA",
-                  "container",
-                  "container app",
-                  "ContainerApp",
-                 // "containers",
-                  "kubernetes"
-                  };
-
-            List<string> CN_AKSTerms = new List<string>()
-                { "AKS","kubernetes","Kubernetes","k8s","K8S","k8S","K8s"};
-
-            List<string> OneAKSTitles = new List<string>()
-                { "Container Apps PoC",
+              List<string> OneAKSTitles = new List<string>()
+                { 
+                  "architect for AKS or Container app",
+                  "Container Apps PoC",
                   "Azure Container App Demo",
                   "Azure ContainerApp Demo",
                   "ACA",
-                  "containers",
-                  "OneStream Kubernetes on Azure",
+                  "help understanding containers",              
                   "Help us decide AKS or ARO.",
                   "Cloud Native Deep Dive with customer (Serverless, Containers, AKS)",
                   "OneStream Kubernetes on Azure",
                   "APIM"
                   };
+            Console.WriteLine("Hello World!");
+            string OneAskClassification = "";
+           
+            int CloudNativeCount = 0; // aks, aro, aca, container, cloud native, k8s, kubernetes
+            List<string> CN_SingleTerms = new List<string>()
+                { "AKS",
+                  "ARO",
+                  "ACA",
+                  //"container",
+                  "container app",
+                  "ContainerApp",   
+                  "k8s",              
+                  "kubernetes"
+                  };
+
+            List<string> CN_AKSTerms = new List<string>()
+                { "AKS","kubernetes","Kubernetes","k8s"};
+            List<string> CN_ACATerms = new List<string>()
+                { "ACA","container app","ContainerApp"};          
 
             foreach (string Title in OneAKSTitles)
             {
@@ -45,16 +48,29 @@ namespace Application
                 CloudNativeCount = 0;
                 foreach (string CNTerm in CN_SingleTerms)
                 {
-                    if (StringExists = Title.Contains(CNTerm, StringComparison.CurrentCultureIgnoreCase))
+                    if (Title.Contains(CNTerm, StringComparison.CurrentCultureIgnoreCase))
                     {
+                        // you made it this far so count it as a CN terms and capture which ever term we found
+                        CloudNativeCount++;
                         OneAskClassification = CNTerm;
 
-                        if (CN_AKSTerms.Any(s => s.Contains(CNTerm, StringComparison.CurrentCultureIgnoreCase)))
-                            OneAskClassification = "AKS";
-
-                        CloudNativeCount++;
+                        // if count is greater than 1, we call it CN and are done
                         if (CloudNativeCount > 1)
                             break;
+
+                        // Tagging processing
+                        // s is the
+                        if (CN_ACATerms.Any(s => s.Equals(CNTerm, StringComparison.CurrentCultureIgnoreCase)))
+                            OneAskClassification = "ACA";                                                
+
+                        if (CN_AKSTerms.Any(s => s.Equals(CNTerm, StringComparison.CurrentCultureIgnoreCase)))
+                            OneAskClassification = "AKS";                     
+                        
+                        string repattern = @"(cloud).(native)";
+                        if (Regex.IsMatch(CNTerm,repattern,RegexOptions.IgnoreCase))
+                            OneAskClassification = "Cloud Native";
+
+                       
                     }
 
                 } // terms
