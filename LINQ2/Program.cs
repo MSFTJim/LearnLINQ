@@ -9,63 +9,63 @@ namespace Application
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            string OneAskClassification = "";
             bool StringExists = false;
-            List<string> s1 = new List<string>()
+            int CloudNativeCount = 0; // aks, aro, aca, container, cloud native, k8s, kubernetes
+            List<string> CN_SingleTerms = new List<string>()
                 { "AKS",
                   "ARO",
+                  "ACA",
+                  "container",
+                  "container app",
+                  "ContainerApp",
+                 // "containers",
+                  "kubernetes"
+                  };
+
+            List<string> CN_AKSTerms = new List<string>()
+                { "AKS","kubernetes","Kubernetes","k8s","K8S","k8S","K8s"};
+
+            List<string> OneAKSTitles = new List<string>()
+                { "Container Apps PoC",
+                  "Azure Container App Demo",
+                  "Azure ContainerApp Demo",
+                  "ACA",
+                  "containers",
+                  "OneStream Kubernetes on Azure",
+                  "Help us decide AKS or ARO.",
+                  "Cloud Native Deep Dive with customer (Serverless, Containers, AKS)",
+                  "OneStream Kubernetes on Azure",
                   "APIM"
                   };
-            string s2 = "Help us decide AKS or ARO.";
 
-            //StringExists = s2.Contains
-            
-            StringExists = s1.Any(s => s.Contains(s2));
-
-             foreach (string OneAsk in s1)
+            foreach (string Title in OneAKSTitles)
             {
-                StringExists = s2.Contains(OneAsk);
-                Console.WriteLine(OneAsk+", "+StringExists);
-            }
-
-
-            List<Student> students = new List<Student>
+                OneAskClassification = "Not Set Yet!";
+                CloudNativeCount = 0;
+                foreach (string CNTerm in CN_SingleTerms)
                 {
-                    new Student {First="Svetlana", Last="Omelchenko", ID=111, Scores= new List<int> {97, 92, 81, 60}},
-                    new Student {First="Claire", Last="O'Donnell", ID=112, Scores= new List<int> {75, 84, 91, 39}},
-                    new Student {First="Sven", Last="Mortensen", ID=113, Scores= new List<int> {88, 94, 65, 91}},
-                    new Student {First="Cesar", Last="Garcia", ID=114, Scores= new List<int> {97, 89, 85, 82}},
-                    new Student {First="Debra", Last="Garcia", ID=115, Scores= new List<int> {35, 72, 91, 70}},
-                    new Student {First="Fadi", Last="Fakhouri", ID=116, Scores= new List<int> {99, 86, 90, 94}},
-                    new Student {First="Hanying", Last="Feng", ID=117, Scores= new List<int> {93, 92, 80, 87}},
-                    new Student {First="Hugo", Last="Garcia", ID=118, Scores= new List<int> {92, 90, 83, 78}},
-                    new Student {First="Lance", Last="Tucker", ID=119, Scores= new List<int> {68, 79, 88, 92}},
-                    new Student {First="Terry", Last="Adams", ID=120, Scores= new List<int> {99, 82, 81, 79}},
-                    new Student {First="Eugene", Last="Zabokritski", ID=121, Scores= new List<int> {96, 85, 91, 60}},
-                    new Student {First="Michael", Last="Tucker", ID=122, Scores= new List<int> {94, 92, 91, 91}}
-                };
-            IEnumerable<Student> studentQuery =
-                from student in students
-                where student.Scores[0] > 90
-                select student;
+                    if (StringExists = Title.Contains(CNTerm, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        OneAskClassification = CNTerm;
 
-        //   foreach (Student student in studentQuery)
-        //     {
-        //         Console.WriteLine("{0}, {1}", student.Last, student.First);
-        //     }
+                        if (CN_AKSTerms.Any(s => s.Contains(CNTerm, StringComparison.CurrentCultureIgnoreCase)))
+                            OneAskClassification = "AKS";
 
+                        CloudNativeCount++;
+                        if (CloudNativeCount > 1)
+                            break;
+                    }
 
-        }
+                } // terms
+                if (CloudNativeCount > 1)
+                    OneAskClassification = "Cloud Native";
 
+                Console.WriteLine("final value: " + OneAskClassification + ". Count: " + CloudNativeCount+", "+Title);
 
-        public class Student
-        {
-            public string? First { get; set; }
-            public string? Last { get; set; }
-            public int ID { get; set; }
-            public List<int>? Scores;
-        }
+            } // Titles
 
-
+        } // main
 
     } // End Class = Program
 
