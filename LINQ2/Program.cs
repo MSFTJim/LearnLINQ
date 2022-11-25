@@ -11,12 +11,12 @@ namespace Application
         {
               List<string> OneAKSTitles = new List<string>()
                 { 
-                  "architect for AKS or Container app",
                   "Container Apps PoC",
+                  "help understanding containers",                            
+                  "architect for AKS or Container app",                  
                   "Azure Container App Demo",
                   "Azure ContainerApp Demo",
-                  "ACA",
-                  "help understanding containers",              
+                  "ACA",                      
                   "Help us decide AKS or ARO.",
                   "Cloud Native Deep Dive with customer (Serverless, Containers, AKS)",
                   "OneStream Kubernetes on Azure",
@@ -30,9 +30,9 @@ namespace Application
                 { "AKS",
                   "ARO",
                   "ACA",
-                  //"container",
-                  "container app",
-                  "ContainerApp",   
+                  "container",
+                //   "container app",
+                //   "ContainerApp",   
                   "k8s",              
                   "kubernetes"
                   };
@@ -60,9 +60,18 @@ namespace Application
 
                         // Tagging processing
                         // s is the
+                        if (Title.Contains("container", StringComparison.CurrentCultureIgnoreCase))
+                            if (Title.Contains("container app", StringComparison.CurrentCultureIgnoreCase))
+                                OneAskClassification = "ACA";
+                            else  
+                                if (Title.Contains("ContainerApp", StringComparison.CurrentCultureIgnoreCase))
+                                    OneAskClassification = "ACA";
+                                else
+                                    OneAskClassification = "Cloud Native";                                          
+                        
                         if (CN_ACATerms.Any(s => s.Equals(CNTerm, StringComparison.CurrentCultureIgnoreCase)))
-                            OneAskClassification = "ACA";                                                
-
+                                OneAskClassification = "ACA";
+                        
                         if (CN_AKSTerms.Any(s => s.Equals(CNTerm, StringComparison.CurrentCultureIgnoreCase)))
                             OneAskClassification = "AKS";                     
                         
