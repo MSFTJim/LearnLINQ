@@ -11,9 +11,9 @@ namespace Application
         {
               List<string> OneAKSTitles = new List<string>()
                 { 
+                  "architect for AKS or Container app",                  
                   "Container Apps PoC",
                   "help understanding containers",                            
-                  "architect for AKS or Container app",                  
                   "Azure Container App Demo",
                   "Azure ContainerApp Demo",
                   "ACA",                      
@@ -26,7 +26,17 @@ namespace Application
             string OneAskClassification = "";
            
             int CloudNativeCount = 0; // aks, aro, aca, container, cloud native, k8s, kubernetes
-            List<string> CN_SingleTerms = new List<string>()
+            List<string> CN_Terms = new List<string>()
+                { "AKS",
+                  "ARO",
+                  "ACA",
+                  "container",
+                //   "container app",
+                //   "ContainerApp",   
+                  "k8s",              
+                  "kubernetes"
+                  };
+              List<string> CN_SingleTerms = new List<string>()
                 { "AKS",
                   "ARO",
                   "ACA",
@@ -38,9 +48,16 @@ namespace Application
                   };
 
             List<string> CN_AKSTerms = new List<string>()
-                { "AKS","kubernetes","Kubernetes","k8s"};
+                { "AKS","kubernetes","k8s"};
             List<string> CN_ACATerms = new List<string>()
                 { "ACA","container app","ContainerApp"};          
+            
+            List<string> Bobo = new List<string>()
+            { "container"};
+            Bobo.AddRange(CN_AKSTerms);
+            Bobo.AddRange(CN_ACATerms);
+
+
 
             foreach (string Title in OneAKSTitles)
             {
