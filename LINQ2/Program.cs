@@ -11,6 +11,7 @@ namespace Application
         {
               List<string> OneAKSTitles = new List<string>()
                 { 
+                  "architect containers for Container app",                  
                   "architect for AKS or Container app",                  
                   "Container Apps PoC",
                   "help understanding containers",                            
@@ -96,7 +97,8 @@ namespace Application
                         if (Regex.IsMatch(CNTerm,repattern,RegexOptions.IgnoreCase))
                             OneAskClassification = "Cloud Native";
 
-                       
+                       int count = Regex.Matches(Title, "container", RegexOptions.IgnoreCase).Count;
+
                     }
 
                 } // terms
